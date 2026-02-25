@@ -4,14 +4,13 @@ import numpy as np
 import joblib
 
 st.set_page_config(page_title="EMI Risk Assessment", layout="wide")
-st.title("💳 EMI Prediction & Risk Assessment System")
+st.title("EMI Prediction & Risk Assessment System")
 
-# Load models
 classification_model = joblib.load("best_classification_model.pkl")
 regression_model = joblib.load("best_regression_model.pkl")
 model_columns = joblib.load("model_columns.pkl")
 
-st.header("📋 Enter Customer Financial Details")
+st.header("Enter Customer Financial Details")
 
 reg_or_class = st.selectbox(
     "Select Prediction Type", ["Classification", "Regression"]
@@ -63,10 +62,6 @@ with col3:
         ],
     )
 
-# -----------------------
-# FEATURE ENGINEERING
-# -----------------------
-
 total_monthly_expenses = (
     monthly_rent
     + school_fees
@@ -83,10 +78,6 @@ affordability_ratio = (
     if monthly_salary != 0
     else 0
 )
-
-# -----------------------
-# PREDICTION
-# -----------------------
 
 if st.button("Predict"):
 
@@ -124,13 +115,11 @@ if st.button("Predict"):
 
     input_df = pd.DataFrame([input_dict])
     input_df = pd.get_dummies(input_df, drop_first=True)
-
-    # Align with training columns
     input_df = input_df.reindex(columns=model_columns, fill_value=0)
 
     st.success("Prediction Completed!")
 
-    st.subheader("📊 Results")
+    st.subheader("Results")
 
     if reg_or_class == "Classification":
         prediction = classification_model.predict(input_df)[0]
