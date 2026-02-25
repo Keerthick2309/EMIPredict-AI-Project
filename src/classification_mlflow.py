@@ -75,10 +75,10 @@ with mlflow.start_run(run_name="XGBoost_Classifier"):
         n_estimators=300,
         learning_rate=0.1,
         max_depth=6,
-        subsample=0.8,
-        colsample_bytree=0.8,
+        subsample=1.0,
+        colsample_bytree=1.0,
+        min_child_weight= 3,
         objective="multi:softprob",
-        eval_metric="mlogloss",
         random_state=42
     )
 
@@ -104,18 +104,21 @@ with mlflow.start_run(run_name="Logistic_Regression"):
     log_model.fit(X_train_scaled, y_train)
     evaluate_and_log(log_model, "logistic_model", X_test_scaled, y_test)
 
-# with mlflow.start_run(run_name="Random_Forest"):
+with mlflow.start_run(run_name="Random_Forest"):
 
-#     rf_model = RandomForestClassifier(
-#         n_estimators=200,
-#         max_depth=None,
-#         random_state=42,
-#         n_jobs=-1,
-#         class_weight="balanced"
-#     )
+    rf_model = RandomForestClassifier(
+        n_estimators=200,
+        max_depth=20,
+        min_samples_leaf=1,
+        min_samples_split=5,
+        max_features="sqrt",
+        random_state=42,
+        n_jobs=-1,
+        class_weight="balanced"
+    )
 
-#     rf_model.fit(X_train, y_train)
-#     evaluate_and_log(rf_model, "random_forest_model", X_test, y_test)
+    rf_model.fit(X_train, y_train)
+    evaluate_and_log(rf_model, "random_forest_model", X_test, y_test)
 
 if best_run_id is not None:
     result = mlflow.register_model(best_model_path, f"Best_Classification_Model_{best_model_name}")

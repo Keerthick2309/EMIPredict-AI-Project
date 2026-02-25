@@ -83,13 +83,13 @@ with mlflow.start_run(run_name="Linear_Regression"):
 
 with mlflow.start_run(run_name="XGBoost_Regressor"):
 
-    X_full = df.drop(["emi_eligibility", "max_monthly_emi"], axis=1)
-    y_full = df["max_monthly_emi"]
+    X = df.drop(["emi_eligibility", "max_monthly_emi"], axis=1)
+    y = df["max_monthly_emi"]
 
-    X_full = pd.get_dummies(X_full, drop_first=True)
+    X = pd.get_dummies(X, drop_first=True)
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X_full, y_full, test_size=0.2, random_state=42
+        X, y, test_size=0.2, random_state=42
     )
 
     xgb_model = XGBRegressor(   
@@ -106,17 +106,21 @@ with mlflow.start_run(run_name="XGBoost_Regressor"):
 
     evaluate_and_log(xgb_model, "xgb_model", X_test, y_test)
 
-# with mlflow.start_run(run_name="Random_Forest_Regressor"):
+with mlflow.start_run(run_name="Random_Forest_Regressor"):
 
-#     rf_model = RandomForestRegressor(
-#         n_estimators=200,
-#         n_jobs=-1,
-#         random_state=42
-#     )
+    rf_model = RandomForestRegressor(
+        n_estimators=300,
+        random_state=42,
+        max_depth=20,
+        min_samples_split=5,
+        min_samples_leaf=2,
+        max_features="sqrt",
+        n_jobs= -1
+    )
 
-#     rf_model.fit(X_train, y_train)
+    rf_model.fit(X_train, y_train)
 
-#     evaluate_and_log(rf_model, "rf_model", X_test, y_test)
+    evaluate_and_log(rf_model, "rf_model", X_test, y_test)
 
 
 if best_run_id is not None:
