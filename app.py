@@ -18,10 +18,6 @@ reg_or_class = st.selectbox(
 
 col1, col2, col3 = st.columns(3)
 
-# -----------------------
-# HARDCODED DROPDOWNS
-# -----------------------
-
 with col1:
     age = st.number_input("Age", 18, 70, 30)
     gender = st.selectbox("Gender", ["Male", "Female"])
