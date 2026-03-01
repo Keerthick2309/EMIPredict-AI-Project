@@ -78,7 +78,6 @@ with mlflow.start_run(run_name="XGBoost_Classifier"):
         subsample=1.0,
         colsample_bytree=1.0,
         min_child_weight= 3,
-        objective="multi:softprob",
         random_state=42
     )
 
