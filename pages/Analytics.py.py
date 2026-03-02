@@ -10,25 +10,25 @@ st.title("Analytics Dashboard")
 regression_model = joblib.load("best_regression_model.pkl")
 classification_model = joblib.load("best_classification_model.pkl")
 
-df = pd.read_csv("data/emi_prediction_dataset_cleaned.csv")
+#df = pd.read_csv("data/emi_prediction_dataset_cleaned.csv")
 
-col10, col11 = st.columns(2)
+# col10, col11 = st.columns(2)
 
-with col10:
-    st.subheader("EMI Eligibility Distribution")
-    fig, ax = plt.subplots()
-    sns.countplot(x='emi_eligibility', data=df, ax=ax)
-    plt.title("EMI Eligibility Distribution")
-    plt.xlabel("EMI Eligibility")
-    plt.ylabel("Count")
-    st.pyplot(fig)
+# with col10:
+#     st.subheader("EMI Eligibility Distribution")
+#     fig, ax = plt.subplots()
+#     sns.countplot(x='emi_eligibility', data=df, ax=ax)
+#     plt.title("EMI Eligibility Distribution")
+#     plt.xlabel("EMI Eligibility")
+#     plt.ylabel("Count")
+#     st.pyplot(fig)
 
-with col11:
-    st.subheader("Max Monthly EMI Distribution")
-    fig10, ax10 = plt.subplots()
-    sns.histplot(df['max_monthly_emi'], bins=50, ax=ax10)
-    plt.title("Max Monthly EMI Distribution")
-    st.pyplot(fig10)
+# with col11:
+#     st.subheader("Max Monthly EMI Distribution")
+#     fig10, ax10 = plt.subplots()
+#     sns.histplot(df['max_monthly_emi'], bins=50, ax=ax10)
+#     plt.title("Max Monthly EMI Distribution")
+#     st.pyplot(fig10)
 
 col1, col2 = st.columns(2)
 
