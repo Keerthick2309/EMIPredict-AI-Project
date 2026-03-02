@@ -135,4 +135,4 @@ if st.button("Predict", type="secondary"):
     else:
         max_emi = regression_model.predict(input_df)[0]
         st.session_state["prediction"] = max_emi
-        st.write(f"### Maximum Safe EMI: ₹ {round(max_emi, 2)}")
+        st.write(f"### Maximum Safe EMI: ₹ {max_emi:.2f}")
